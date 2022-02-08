@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Firebase
+import JGProgressHUD
 
 class RegistrationController: UIViewController {
     
@@ -58,6 +60,7 @@ class RegistrationController: UIViewController {
         bt.backgroundColor = .gray
         bt.layer.cornerRadius = 25
         bt.isEnabled = false
+        bt.addTarget(self, action: #selector(handleRegister), for: .touchUpInside)
         return bt
     }()
     
@@ -151,6 +154,27 @@ class RegistrationController: UIViewController {
         } else {
             viewModel.fullName = textField.text
         }
+    }
+    
+    @objc func handleRegister() {
+        handleTapGesture()
+        guard let email = emailTextField.text , let password = passwordTextField.text else {return}
+        Auth.auth().createUser(withEmail: email, password: password) { [weak self] result, error in
+            if let error = error {
+                self?.showHudWithError(error: error)
+                return
+            }
+            print("registraiotion successful : \(result?.user.uid)")
+        }
+        
+    }
+    
+    func showHudWithError(error: Error) {
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Failed Registration"
+        hud.detailTextLabel.text = error.localizedDescription
+        hud.show(in: self.view)
+        hud.dismiss(afterDelay: 4)
     }
     
    

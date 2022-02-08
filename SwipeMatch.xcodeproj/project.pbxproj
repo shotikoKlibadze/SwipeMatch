@@ -21,6 +21,7 @@
 		0925249F27A17FFA0008B080 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0925249E27A17FFA0008B080 /* User.swift */; };
 		092524E627A41C240008B080 /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092524E527A41C240008B080 /* CardViewModel.swift */; };
 		092524E827A42A720008B080 /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092524E727A42A720008B080 /* Advertiser.swift */; };
+		095D3F9A27B1652F009BB588 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 095D3F9927B1652F009BB588 /* GoogleService-Info.plist */; };
 		09F8C96227ABF16000282323 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F8C96127ABF16000282323 /* RegistrationController.swift */; };
 		09F8C96527ABFC5A00282323 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F8C96427ABFC5A00282323 /* CustomTextField.swift */; };
 		09F8C96727AD25D600282323 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F8C96627AD25D600282323 /* RegistrationViewModel.swift */; };
@@ -42,6 +43,7 @@
 		0925249E27A17FFA0008B080 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		092524E527A41C240008B080 /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
 		092524E727A42A720008B080 /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
+		095D3F9927B1652F009BB588 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		09F8C96127ABF16000282323 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		09F8C96427ABFC5A00282323 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		09F8C96627AD25D600282323 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				09F8C96027ABF13700282323 /* Controllers */,
 				09252483279FFFE20008B080 /* Main.storyboard */,
 				09252486279FFFE40008B080 /* Assets.xcassets */,
+				095D3F9927B1652F009BB588 /* GoogleService-Info.plist */,
 			);
 			path = SwipeMatch;
 			sourceTree = "<group>";
@@ -182,7 +185,6 @@
 				242470E0F66C3CBFCF3F8191 /* Pods-SwipeMatch.debug.xcconfig */,
 				24744967A57E1ED35796A2FC /* Pods-SwipeMatch.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -247,6 +249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0925248A279FFFE40008B080 /* LaunchScreen.storyboard in Resources */,
+				095D3F9A27B1652F009BB588 /* GoogleService-Info.plist in Resources */,
 				09252487279FFFE40008B080 /* Assets.xcassets in Resources */,
 				09252485279FFFE20008B080 /* Main.storyboard in Resources */,
 			);

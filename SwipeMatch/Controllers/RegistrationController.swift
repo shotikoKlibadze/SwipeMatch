@@ -8,19 +8,31 @@
 import UIKit
 import Firebase
 import JGProgressHUD
+import FirebaseStorage
 
 class RegistrationController: UIViewController {
     
+    let registerHUD = JGProgressHUD(style: .dark)
+    
     let photoButton : UIButton = {
-        let button = UIButton()
+        let button = UIButton(type: .system)
         button.setTitle("Select Photo", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 32, weight: .heavy)
         button.backgroundColor = .white
         button.setTitleColor(.black, for: .normal)
         button.layer.cornerRadius = 16
         button.heightAnchor.constraint(equalToConstant: 270).isActive = true
+        button.addTarget(self, action: #selector(handlePhotoButtonTap), for: .touchUpInside)
+        button.clipsToBounds = true
+        button.imageView?.contentMode = .scaleAspectFill
         return button
     }()
+    
+    @objc func handlePhotoButtonTap() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        present(imagePicker,animated: true)
+    }
    
     let fullNameTextField : CustomTextField = {
         let tf = CustomTextField(padding: 16)
@@ -52,7 +64,7 @@ class RegistrationController: UIViewController {
     }()
     
     let registerButton : UIButton = {
-        let bt = UIButton()
+        let bt = UIButton(type: .system)
         bt.setTitle("Register", for: .normal)
         bt.setTitleColor(.darkGray, for: .disabled)
         bt.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .bold)
@@ -88,7 +100,8 @@ class RegistrationController: UIViewController {
     }
     
     fileprivate func setUpViewModelObserver() {
-        viewModel.isFormValidObserver = { [weak self] isValid in
+        viewModel.isFormValidObserver.bind { [weak self] isValid in
+            guard let isValid = isValid else {return}
             guard let self = self else {return}
             self.registerButton.isEnabled = isValid
             if isValid {
@@ -97,6 +110,19 @@ class RegistrationController: UIViewController {
             } else {
                 self.registerButton.backgroundColor = .gray
                 self.registerButton.setTitleColor(.darkGray, for: .disabled)
+            }
+        }
+        
+        viewModel.image.bind { [weak self] img in
+            self?.photoButton.setImage(img?.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+        viewModel.isRegistering.bind { [weak self] isRegistering in
+            guard let self = self, let isRegistering = isRegistering else { return }
+            if isRegistering {
+                self.registerHUD.textLabel.text = "Registering"
+                self.registerHUD.show(in: self.view)
+            } else {
+                self.registerHUD.dismiss()
             }
         }
     }
@@ -158,24 +184,39 @@ class RegistrationController: UIViewController {
     
     @objc func handleRegister() {
         handleTapGesture()
-        guard let email = emailTextField.text , let password = passwordTextField.text else {return}
-        Auth.auth().createUser(withEmail: email, password: password) { [weak self] result, error in
+        viewModel.isRegistering.bind { [weak self] isRegistering in
+            guard let registering = isRegistering, let self = self else { return }
+            if registering {
+                self.registerHUD.textLabel.text = "Registering"
+                self.registerHUD.show(in: self.view)
+            } else {
+                self.registerHUD.dismiss()
+            }
+        }
+        viewModel.registerUser { [weak self] error in
             if let error = error {
                 self?.showHudWithError(error: error)
-                return
             }
-            print("registraiotion successful : \(result?.user.uid)")
         }
-        
     }
     
     func showHudWithError(error: Error) {
+        registerHUD.dismiss()
         let hud = JGProgressHUD(style: .dark)
         hud.textLabel.text = "Failed Registration"
         hud.detailTextLabel.text = error.localizedDescription
         hud.show(in: self.view)
         hud.dismiss(afterDelay: 4)
+        print(error.localizedDescription)
     }
     
    
+}
+
+extension RegistrationController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let image = info[.originalImage] as? UIImage
+        viewModel.image.value = image
+        dismiss(animated: true, completion: nil)
+    }
 }

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SDWebImage
+import Kingfisher
 
 class CardView: UIView {
 
@@ -19,7 +21,9 @@ class CardView: UIView {
     var cardViewModel : CardViewModel! {
         didSet {
             let imageName = cardViewModel.imageNames.first ?? ""
-            imageView.image = UIImage(named: imageName)
+            if let url = URL(string: imageName) {
+                imageView.kf.setImage(with: url)
+            }
             informationLabel.attributedText = cardViewModel.attributedString
             informationLabel.textAlignment = cardViewModel.textAlignment
             if cardViewModel.imageNames.count <= 1 {
@@ -49,6 +53,7 @@ class CardView: UIView {
         clipsToBounds = true
         addSubview(imageView)
         imageView.fillSuperview()
+        imageView.contentMode = .scaleAspectFill
         
         setupGradientLayer()
         setupBarStackView()
@@ -64,9 +69,12 @@ class CardView: UIView {
     }
     
     func setUpPhoto() {
-        cardViewModel.imageIndexObserver = { [weak self] indx, image in
+        cardViewModel.imageIndexObserver = { [weak self] indx, imageUrl in
             guard let self = self else {return}
-            self.imageView.image = image
+            if let url = URL(string: imageUrl) {
+                self.imageView.kf.setImage(with: url)
+            }
+            
             self.barStackView.arrangedSubviews.forEach { view in
                 view.backgroundColor = self.deselectedColor
             }

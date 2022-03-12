@@ -6,27 +6,35 @@
 //
 
 import UIKit
-
+import Firebase
 class HomeController: UIViewController {
     
     let topStackView = TopNavigationControllsStackView()
     let cardsDeckView = UIView()
     let bottomStackView = HomeBottomControlsStackView()
 
-    var cardViewModels = ([
-        User(name: "Name 1", profession: "Profession 1", age: 20, imageNames: ["jane1","jane2","jane3"]),
-        User(name: "Name 2", profession: "Profession 2", age: 21, imageNames: ["kelly1","kelly2","kelly3"]),
-        Advertiser(title: "Slide Out Menu", brandName: "Let's build that app", posterPhotoName: ["addvertisement"])
-    ] as! [ProducesCardViewModel]).map { producer -> CardViewModel in
-        return producer.toCardViewModel()
-    }
-
-  
-    
+    var cardViewModels = [CardViewModel]()
+     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayOut()
         setuPDummyCards()
+        fetchUsersFromFireStore()
+    }
+    
+    fileprivate func fetchUsersFromFireStore() {
+        Firestore.firestore().collection("users").getDocuments { [weak self] snapShot, error in
+            if let error = error {
+                print("failed to fetch users")
+            }
+            
+            snapShot?.documents.forEach({ [weak self] documentSnapshot in
+                let userDictionary = documentSnapshot.data()
+                let user = User(dictionary: userDictionary)
+                self?.cardViewModels.append(user.toCardViewModel())
+            })
+            self?.setuPDummyCards()
+        }
     }
     
     fileprivate func setuPDummyCards() {
@@ -39,6 +47,7 @@ class HomeController: UIViewController {
     }
     
     fileprivate func setupLayOut() {
+        view.backgroundColor = .white
         let mainStackView = UIStackView(arrangedSubviews: [topStackView,cardsDeckView,bottomStackView])
         view.addSubview(mainStackView)
         mainStackView.axis = .vertical

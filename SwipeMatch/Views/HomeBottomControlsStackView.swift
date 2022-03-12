@@ -9,16 +9,24 @@ import UIKit
 
 class HomeBottomControlsStackView: UIStackView {
    
+    static func createButton(image: String) -> UIButton {
+        let button = UIButton()
+        button.setImage(UIImage(named: image)?.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        return button
+    }
+    
+    
+    let refreshButton = createButton(image: "1")
+    let dislikeButton = createButton(image: "2")
+    let starButton = createButton(image: "3")
+    let likeButton = createButton(image: "4")
+    let boostButton = createButton(image: "5")
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let buttons = [UIImage(named: "1"),UIImage(named: "2"),UIImage(named: "3"),UIImage(named: "4"),UIImage(named: "5")].map { img -> UIView in
-            let button = UIButton(type: .system)
-            button.setImage(img?.withRenderingMode(.alwaysOriginal), for: .normal)
-            return button
-        }
-        buttons.forEach { button in
+        [refreshButton, dislikeButton, starButton, likeButton, boostButton].forEach { button in
             addArrangedSubview(button)
         }
         heightAnchor.constraint(equalToConstant: 100).isActive = true

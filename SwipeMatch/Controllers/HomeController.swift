@@ -7,11 +7,12 @@
 
 import UIKit
 import Firebase
+import JGProgressHUD
 class HomeController: UIViewController {
     
     let topStackView = TopNavigationControllsStackView()
     let cardsDeckView = UIView()
-    let bottomStackView = HomeBottomControlsStackView()
+    let bottomControls = HomeBottomControlsStackView()
 
     var cardViewModels = [CardViewModel]()
      
@@ -20,35 +21,54 @@ class HomeController: UIViewController {
         setupLayOut()
         setuPDummyCards()
         fetchUsersFromFireStore()
+        bottomControls.refreshButton.addTarget(self, action: #selector(refetchUsers), for: .touchUpInside)
+        
+    }
+    
+    private var lastUser : User?
+    
+    @objc func refetchUsers(){
+        fetchUsersFromFireStore()
     }
     
     fileprivate func fetchUsersFromFireStore() {
-        Firestore.firestore().collection("users").getDocuments { [weak self] snapShot, error in
-            if let error = error {
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Fetching Users"
+        hud.show(in: view)
+        let query =  Firestore.firestore().collection("users").order(by: "uid").start(after: [lastUser?.id ?? ""]).limit(to: 2)
+        query.getDocuments { [weak self] snapShot, error in
+            hud.dismiss(animated: true)
+            if let _ = error {
                 print("failed to fetch users")
             }
-            
             snapShot?.documents.forEach({ [weak self] documentSnapshot in
                 let userDictionary = documentSnapshot.data()
                 let user = User(dictionary: userDictionary)
                 self?.cardViewModels.append(user.toCardViewModel())
+                self?.lastUser = user
+                self?.setUpCardFromUser(user: user)
             })
-            self?.setuPDummyCards()
+            
         }
+    }
+    
+    fileprivate func setUpCardFromUser(user: User) {
+        let cardView = CardView()
+        cardView.cardViewModel = user.toCardViewModel()
+        cardsDeckView.addSubview(cardView)
+        cardsDeckView.sendSubviewToBack(cardView)
+        cardView.fillSuperview()
     }
     
     fileprivate func setuPDummyCards() {
         cardViewModels.forEach { cardVM in
-            let cardView = CardView()
-            cardView.cardViewModel = cardVM
-            cardsDeckView.addSubview(cardView)
-            cardView.fillSuperview()
+           
         }
     }
     
     fileprivate func setupLayOut() {
         view.backgroundColor = .white
-        let mainStackView = UIStackView(arrangedSubviews: [topStackView,cardsDeckView,bottomStackView])
+        let mainStackView = UIStackView(arrangedSubviews: [topStackView,cardsDeckView,bottomControls])
         view.addSubview(mainStackView)
         mainStackView.axis = .vertical
         mainStackView.translatesAutoresizingMaskIntoConstraints = false

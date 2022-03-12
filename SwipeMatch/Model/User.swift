@@ -12,12 +12,14 @@ struct User : ProducesCardViewModel {
     var profession : String?
     var age : Int?
     var imageUrl : String?
+    var id : String?
     
     init(dictionary: [String: Any]) {
         self.name = dictionary["fullName"] as? String
         self.age = dictionary["age"] as? Int
         self.profession =  dictionary["profession"] as? String
         self.imageUrl = dictionary["photoUrl1"] as? String
+        self.id = dictionary["uid"] as? String
         
     }
     

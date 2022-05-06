@@ -15,6 +15,7 @@ class HomeController: UIViewController {
     let bottomControls = HomeBottomControlsStackView()
 
     var cardViewModels = [CardViewModel]()
+    private var lastUser : User?
      
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,10 +23,19 @@ class HomeController: UIViewController {
         setuPDummyCards()
         fetchUsersFromFireStore()
         bottomControls.refreshButton.addTarget(self, action: #selector(refetchUsers), for: .touchUpInside)
+        topStackView.settingsButton.addTarget(self, action: #selector(settingsTapped), for: .touchUpInside)
+        
         
     }
     
-    private var lastUser : User?
+    @objc func settingsTapped() {
+        let vc = SettingsController()
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = .fullScreen
+        present(navController, animated: true)
+    }
+    
+   
     
     @objc func refetchUsers(){
         fetchUsersFromFireStore()

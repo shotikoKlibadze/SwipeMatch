@@ -23,6 +23,7 @@
 		092524E827A42A720008B080 /* Advertiser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092524E727A42A720008B080 /* Advertiser.swift */; };
 		095D3F9A27B1652F009BB588 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 095D3F9927B1652F009BB588 /* GoogleService-Info.plist */; };
 		095D3F9D27B28B07009BB588 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095D3F9C27B28B07009BB588 /* Bindable.swift */; };
+		09B657C82825067C00D54A6C /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B657C72825067C00D54A6C /* SettingsController.swift */; };
 		09F8C96227ABF16000282323 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F8C96127ABF16000282323 /* RegistrationController.swift */; };
 		09F8C96527ABFC5A00282323 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F8C96427ABFC5A00282323 /* CustomTextField.swift */; };
 		09F8C96727AD25D600282323 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F8C96627AD25D600282323 /* RegistrationViewModel.swift */; };
@@ -46,6 +47,7 @@
 		092524E727A42A720008B080 /* Advertiser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertiser.swift; sourceTree = "<group>"; };
 		095D3F9927B1652F009BB588 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		095D3F9C27B28B07009BB588 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
+		09B657C72825067C00D54A6C /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		09F8C96127ABF16000282323 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
 		09F8C96427ABFC5A00282323 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		09F8C96627AD25D600282323 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 			children = (
 				09252481279FFFE20008B080 /* HomeController.swift */,
 				09F8C96127ABF16000282323 /* RegistrationController.swift */,
+				09B657C72825067C00D54A6C /* SettingsController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 				0925247E279FFFE20008B080 /* AppDelegate.swift in Sources */,
 				0925249627A01A3F0008B080 /* HomeBottomControlsStackView.swift in Sources */,
 				0925249F27A17FFA0008B080 /* User.swift in Sources */,
+				09B657C82825067C00D54A6C /* SettingsController.swift in Sources */,
 				09F8C96227ABF16000282323 /* RegistrationController.swift in Sources */,
 				0925249327A007BC0008B080 /* Extensions+UIView.swift in Sources */,
 				095D3F9D27B28B07009BB588 /* Bindable.swift in Sources */,

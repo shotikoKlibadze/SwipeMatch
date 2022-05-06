@@ -23,6 +23,22 @@ class SettingsController: UIViewController {
         return table
     }()
     
+    lazy var headerView : UIView = {
+        let headerView = UIView()
+        headerView.backgroundColor = .red
+        headerView.addSubviews(views:image1button,image2button,image3button)
+        let padding : CGFloat = 16
+        image1button.anchor(top: headerView.topAnchor, leading: headerView.leadingAnchor, bottom: headerView.bottomAnchor, trailing: nil, padding: .init(top: padding, left: padding, bottom: padding, right: 0))
+        image1button.widthAnchor.constraint(equalTo: headerView.widthAnchor, multiplier: 0.45).isActive = true
+        let stackView = UIStackView(arrangedSubviews: [image2button, image3button])
+        headerView.addSubview(stackView)
+        stackView.anchor(top: headerView.topAnchor, leading: image1button.trailingAnchor, bottom: headerView.bottomAnchor, trailing: headerView.trailingAnchor, padding: .init(top: padding, left: padding, bottom: padding, right: padding))
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 16
+        return headerView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationItems()
@@ -73,18 +89,6 @@ class SettingsController: UIViewController {
 extension SettingsController : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView()
-        headerView.backgroundColor = .red
-        headerView.addSubviews(views:image1button,image2button,image3button)
-        let padding : CGFloat = 16
-        image1button.anchor(top: headerView.topAnchor, leading: headerView.leadingAnchor, bottom: headerView.bottomAnchor, trailing: nil, padding: .init(top: padding, left: padding, bottom: padding, right: 0))
-        image1button.widthAnchor.constraint(equalTo: headerView.widthAnchor, multiplier: 0.45).isActive = true
-        let stackView = UIStackView(arrangedSubviews: [image2button, image3button])
-        headerView.addSubview(stackView)
-        stackView.anchor(top: headerView.topAnchor, leading: image1button.trailingAnchor, bottom: headerView.bottomAnchor, trailing: headerView.trailingAnchor, padding: .init(top: padding, left: padding, bottom: padding, right: padding))
-        stackView.axis = .vertical
-        stackView.distribution = .fillEqually
-        stackView.spacing = 16
         return headerView
     }
     
